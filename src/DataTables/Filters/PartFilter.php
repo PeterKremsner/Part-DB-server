@@ -88,6 +88,8 @@ class PartFilter implements FilterInterface
     public readonly EntityConstraint $attachmentType;
     public readonly TextConstraint $attachmentName;
 
+    public readonly IntConstraint $environment;
+
     /** @var ArrayCollection<int, ParameterConstraint> */
     public readonly ArrayCollection $parameters;
     public readonly IntConstraint $parametersCount;
@@ -161,6 +163,9 @@ class PartFilter implements FilterInterface
         $this->bomQuantity = new NumberConstraint('_projectBomEntries.quantity');
         $this->bomName = new TextConstraint('_projectBomEntries.name');
         $this->bomComment = new TextConstraint('_projectBomEntries.comment');
+
+        //$this->environment = new IntConstraint('part.environment', 'environment' , 0, "=");
+        $this->environment = new IntConstraint('part.environment');
 
     }
 

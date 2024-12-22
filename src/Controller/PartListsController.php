@@ -158,15 +158,17 @@ class PartListsController extends AbstractController
         ], $additonal_template_vars));
     }
 
-    #[Route(path: '/category/{id}/parts', name: 'part_list_category')]
-    public function showCategory(Category $category, Request $request): Response
+    #[Route(path: '/category/{environment}/{id}/parts', name: 'part_list_category')]
+    public function showCategory(Category $category, Request $request,int $environment): Response
     {
         $this->denyAccessUnlessGranted('@categories.read');
 
         return $this->showListWithFilter($request,
             'parts/lists/category_list.html.twig',
-            function (PartFilter $filter) use ($category) {
+            function (PartFilter $filter) use ($category, $environment) {
                 $filter->category->setOperator('INCLUDING_CHILDREN')->setValue($category);
+                $filter->environment->setOperator("=");
+                $filter->environment->setValue1($environment > 0 ? $environment : null);
             }, function (FormInterface $filterForm) {
                 $this->disableFormFieldAfterCreation($filterForm->get('category')->get('value'));
             }, [
@@ -176,7 +178,7 @@ class PartListsController extends AbstractController
         );
     }
 
-    #[Route(path: '/footprint/{id}/parts', name: 'part_list_footprint')]
+    #[Route(path: '/footprint/{environment}/{id}/parts', name: 'part_list_footprint')]
     public function showFootprint(Footprint $footprint, Request $request): Response
     {
         $this->denyAccessUnlessGranted('@footprints.read');
@@ -194,7 +196,7 @@ class PartListsController extends AbstractController
         );
     }
 
-    #[Route(path: '/manufacturer/{id}/parts', name: 'part_list_manufacturer')]
+    #[Route(path: '/manufacturer/{environment}/{id}/parts', name: 'part_list_manufacturer')]
     public function showManufacturer(Manufacturer $manufacturer, Request $request): Response
     {
         $this->denyAccessUnlessGranted('@manufacturers.read');
@@ -212,7 +214,7 @@ class PartListsController extends AbstractController
         );
     }
 
-    #[Route(path: '/store_location/{id}/parts', name: 'part_list_store_location')]
+    #[Route(path: '/store_location/{environment}/{id}/parts', name: 'part_list_store_location')]
     public function showStorelocation(StorageLocation $storelocation, Request $request): Response
     {
         $this->denyAccessUnlessGranted('@storelocations.read');
@@ -230,7 +232,7 @@ class PartListsController extends AbstractController
         );
     }
 
-    #[Route(path: '/supplier/{id}/parts', name: 'part_list_supplier')]
+    #[Route(path: '/supplier/{environment}/{id}/parts', name: 'part_list_supplier')]
     public function showSupplier(Supplier $supplier, Request $request): Response
     {
         $this->denyAccessUnlessGranted('@suppliers.read');

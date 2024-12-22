@@ -79,6 +79,9 @@ trait BasicPropertyTrait
     #[Selectable]
     protected ?Footprint $footprint = null;
 
+    #[ORM\Column(type: Types::INTEGER)]
+    protected int $environment = 0;
+
     /**
      * Get the description string like it is saved in the database.
      * This can contain BBCode, it is not parsed yet.

@@ -322,7 +322,7 @@ class EntityURLGenerator
             StorageLocation::class => 'part_list_store_location',
         ];
 
-        return $this->urlGenerator->generate($this->mapToController($map, $entity), ['id' => $entity->getID()]);
+        return $this->urlGenerator->generate($this->mapToController($map, $entity), ['id' => $entity->getID(), "environment" => 0]);
     }
 
     public function deleteURL(AbstractDBElement $entity): string
